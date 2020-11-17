@@ -1,11 +1,15 @@
 # Database Docker
 
+Include this databases engines
+
 * PostgreSQL + PgAdmin
 * SQL Server
 
 # How to use
 
 ## Add .env file
+
+The content is next
 
 ```env
 USER=youruser
@@ -15,6 +19,8 @@ PGUSEREMAIL="your@email.com"
 ```
 
 ## Run
+
+Excecute specific engines
 
 ```bash
 docker-compose up
