@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    restart: always
+    ports:
+      - 5445:5432
+    environment:
+      POSTGRES_USER: ${USER}
+      POSTGRES_PASSWORD: ${PASSWORD}
+      POSTGRES_DB: ${DB}
+    volumes:
+      - mydb:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4:4.28
+    container_name: pgadmin
+    restart: always
+    environment:
+        PGADMIN_DEFAULT_EMAIL: ${PGUSEREMAIL}
+        PGADMIN_DEFAULT_PASSWORD: ${PASSWORD}
+        PGADMIN_LISTEN_PORT: 80
+    ports:
+    - "8080:80"
+    volumes:
+    - pgadmin-data:/var/lib/pgadmin
+    links:
+    - "postgres:pgsql-server"
+  sql-server:
+    container_name: sql-server
+    image: microsoft/mssql-server-linux:2017-latest
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: ${PASSWORD}
+      ACCEPT_EULA: "Y"
+    volumes:
+        - mydb2:/var/opt/mssql
+volumes:
+  mydb:
+    name: mydb
+  mydb2:
+    name: mydb2
+  pgadmin-data:
+    name: pgadmin-data
